@@ -21,21 +21,38 @@ const Guestbook = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (newEntry.name.trim() && newEntry.message.trim()) {
-      try {
-        const createdEntry = await createTestimonial({
-          name: newEntry.name,
-          message: newEntry.message,
-          date: new Date().toISOString().split('T')[0],
-        });
 
-        setEntries([createdEntry, ...entries]); // Add the new entry to the list
-        setNewEntry({ name: '', message: '' }); // Reset the form
-      } catch (error) {
-        console.error('Error adding testimonial:', error);
-      }
+    const { name, message } = newEntry;
+
+    if (name.trim() && message.trim()) {
+        const testimonialData = {
+            name,
+            content: message,  // Changed "message" to "content" to match the backend
+        };
+
+        console.log('Sending testimonial data:', testimonialData);
+
+        try {
+            const createdEntry = await createTestimonial(testimonialData);
+
+            setEntries([createdEntry, ...entries]); // Add the new entry to the list
+            setNewEntry({ name: '', message: '' }); // Reset the form
+        } catch (error) {
+            console.error('Error adding testimonial:', error);
+            if (error.response) {
+                if (error.response.data && error.response.data.message) {
+                    alert(`Error: ${error.response.data.message}`);
+                } else {
+                    alert(`Error: ${error.response.status} - ${error.response.statusText}`);
+                }
+            } else {
+                alert('There was an error adding your testimonial. Please try again later.');
+            }
+        }
+    } else {
+        alert('Please fill in both the name and message fields.');
     }
-  };
+};
 
   return (
     <div className="max-w-2xl mx-auto p-4">
@@ -86,18 +103,19 @@ const Guestbook = () => {
         </form>
       </div>
 
-      {/* Entries List */}
-      <div className="space-y-4">
-        {entries.map(entry => (
-          <div key={entry.id} className="bg-white rounded-lg shadow p-6">
-            <div className="flex justify-between items-start mb-2">
-              <h3 className="font-semibold text-lg text-gray-800">{entry.name}</h3>
-              <span className="text-sm text-gray-500">{entry.date}</span>
-            </div>
-            <p className="text-gray-700">{entry.message}</p>
-          </div>
-        ))}
+{/* Entries List */}
+<div className="space-y-4">
+  {entries.map(entry => (
+    <div key={entry.id} className="bg-white rounded-lg shadow p-6 relative">
+      <div className="flex justify-between items-start mb-2">
+        <h3 className="font-semibold text-lg text-gray-800">{entry.content}</h3>
+        <span className="text-sm text-gray-500 absolute top-2 right-2">{entry.date}</span>
       </div>
+      <p className="text-gray-700">{entry.message}</p>
+      <span className="text-sm text-gray-500 absolute bottom-2 right-2">{entry.name}</span>
+    </div>
+  ))}
+</div>
     </div>
   );
 };
