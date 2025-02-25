@@ -1,4 +1,4 @@
-const Testimonial = require('../models/Testimonial');
+const Testimonial = require('../models/testimonial');
 
 // Create a new testimonial
 exports.createTestimonial = async (req, res) => {
