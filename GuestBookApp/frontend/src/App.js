@@ -1,26 +1,16 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import Login from './components/Login';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Guestbook from './components/Guestbook';
-import ProtectedRoute from './components/ProtectedRoute';
 
-function App() {
+const App = () => {
   return (
-    <BrowserRouter>
+    <Router>
       <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route
-          path="/guestbook"
-          element={
-            <ProtectedRoute>
-              <Guestbook />
-            </ProtectedRoute>
-          }
-        />
-        <Route path="/" element={<Navigate to="/login" replace />} />
+        <Route path="/" element={<Guestbook />} />
+        {/* Add other routes here */}
       </Routes>
-    </BrowserRouter>
+    </Router>
   );
-}
+};
 
 export default App;
