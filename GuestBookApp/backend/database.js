@@ -10,6 +10,12 @@ const sequelize = new Sequelize(
         host: process.env.DB_HOST,
         dialect: 'mysql',
         port: process.env.DB_PORT,
+        dialectOptions: {
+            ssl: {
+                require: true,
+                rejectUnauthorized: true // Set to true if you have a CA certificate.
+            }
+        },
         logging: console.log, // Enable query logging for debugging
     }
 );
@@ -20,3 +26,4 @@ sequelize.authenticate()
     .catch(err => console.error('Database connection error:', err));
 
 module.exports = sequelize;
+

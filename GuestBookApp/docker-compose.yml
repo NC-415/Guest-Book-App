@@ -24,11 +24,11 @@ services:
       - /app/node_modules
     environment:
       - NODE_ENV=development
-      - MYSQL_USER=root
-      - MYSQL_PASSWORD=root
-      - MYSQL_HOST=mysql
+      - MYSQL_USER=nc415
+      - MYSQL_PASSWORD=Eng@ruh415
+      - MYSQL_HOST=az415-dev.mysql.database.azure.com
       - MYSQL_PORT=3306
-      - MYSQL_DATABASE=guestbook
+      - MYSQL_DATABASE=guestbook_app
     command: npm run dev
 
   frontend:
