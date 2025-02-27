@@ -1,0 +1,89 @@
+pipeline {
+    agent any
+
+    environment {
+        GITHUB_REPO = 'https://github.com/NC-415/Guest-Book-App.git'
+       
+        NOTIFY_EMAIL = 'nimesh415fb@gmail.com'
+        DOCKER_HUB_USERNAME = 'pasanudara'
+        DOCKER_HUB_CREDENTIALS_ID = 'docker-hub-credentials' // Update with correct credentials ID
+        FRONTEND_IMAGE = "pasanudara/client"
+        BACKEND_IMAGE = "pasanudara/server"
+    }
+
+    stages {
+       stage('SCM Checkout') {
+            steps {
+            retry(3) {
+            git branch: 'main', url: GITHUB_REPO }
+            }
+        }
+
+        stage('Build Frontend Docker Image') {
+            steps {
+                dir('frontend') {
+                    script {
+                        bat "docker build -t ${FRONTEND_IMAGE}:${BUILD_NUMBER} ."
+                    }
+                }
+            }
+        }
+
+        stage('Build Backend Docker Image') {
+            steps {
+                dir('backend') {
+                    script {
+                        bat "docker build -t ${BACKEND_IMAGE}:${BUILD_NUMBER} ."
+                    }
+                }
+            }
+        }
+
+        stage('Login to Docker Hub') {
+            steps {
+                withCredentials([string(credentialsId: DOCKER_HUB_CREDENTIALS_ID, variable: 'DOCKER_HUB_PASSWORD')]) {
+                    script {
+                        bat "docker login -u ${DOCKER_HUB_USERNAME} -p %%DOCKER_HUB_PASSWORD%%"
+                    }
+                }
+            }
+        }
+
+        stage('Push Frontend Image to Docker Hub') {
+            steps {
+                script {
+                    bat "docker push ${FRONTEND_IMAGE}:${BUILD_NUMBER}"
+                }
+            }
+        }
+
+        stage('Push Backend Image to Docker Hub') {
+            steps {
+                script {
+                    bat "docker push ${BACKEND_IMAGE}:${BUILD_NUMBER}"
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+            emailext to: "${NOTIFY_EMAIL}",
+                     subject: "Jenkins Build Success: ${env.JOB_NAME} [${env.BUILD_NUMBER}]",
+                     body: "The build was successful.\n\nJob: ${env.JOB_NAME}\nBuild Number: ${env.BUILD_NUMBER}\nBuild URL: ${env.BUILD_URL}"
+        }
+
+        failure {
+            emailext to: "${NOTIFY_EMAIL}",
+                     subject: "Jenkins Build Failure: ${env.JOB_NAME} [${env.BUILD_NUMBER}]",
+                     body: "The build failed.\n\nJob: ${env.JOB_NAME}\nBuild Number: ${env.BUILD_NUMBER}\nBuild URL: ${env.BUILD_URL}"
+        }
+
+        always {
+            script {
+                bat "docker logout"
+            }
+            cleanWs()
+        }
+    }
+}
