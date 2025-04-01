@@ -7,7 +7,7 @@ services:
     volumes:
       - mysql_data:/var/lib/mysql
     ports:
-      - "3306:3306"
+      - "3307:3306"
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: guestbook
@@ -44,7 +44,7 @@ services:
     stdin_open: true
     tty: true
     environment:
-      - REACT_APP_BACKEND_URL=http://localhost:5000
+      - REACT_APP_BACKEND_URL=http://backend:5000
 
 volumes:
   mysql_data:
