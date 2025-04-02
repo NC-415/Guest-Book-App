@@ -19,7 +19,7 @@ variable "ec2_instance_type" {
 variable "ec2_key_name" {
   description = "Key pair name for SSH access"
   type        = string
-  default     = "guestbook-key" # Make sure this key exists in your AWS account
+  default     = "book" # Make sure this key exists in your AWS account
 }
 
 variable "frontend_image" {
