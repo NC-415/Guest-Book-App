@@ -65,7 +65,9 @@ return (
           backgroundPosition: "center",
           backgroundAttachment: "fixed"
         }}
+        
       />
+      <div className="absolute inset-0 bg-black bg-opacity-30 backdrop-blur-sm"></div>
       
       {/* Scrollable content */}
       <div className="relative z-10 py-12">

@@ -61,6 +61,7 @@ const AdminDashboard = () => {
       className="w-full min-h-screen bg-cover bg-center bg-fixed bg-no-repeat flex items-center justify-center"
       style={{ backgroundImage: "url('https://images.unsplash.com/photo-1623697899808-80f1a17372be?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')" }}
     >
+      
       <div className="bg-white bg-opacity-30 p-6 rounded-lg shadow-lg w-full max-w-4xl max-h-screen overflow-y-auto my-8">
         <div className="flex justify-between items-center sticky top-0 bg-white bg-opacity-90 py-2 px-4 mb-6 rounded-md">
           <h1 className="text-3xl font-bold text-gray-800">Admin Dashboard</h1>
