@@ -39,19 +39,29 @@ const AdminLogin = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="max-w-md w-full p-6 bg-white rounded-lg shadow-md">
-        <h1 className="text-2xl font-bold text-gray-800 mb-6 text-center">Admin Login</h1>
-        
-        {error && (
-          <div className="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-4" role="alert">
-            <p>{error}</p>
-          </div>
-        )}
-        
-        <form onSubmit={handleLogin} className="space-y-4">
+    <div className="min-h-screen">
+      <div
+        className="fixed inset-0 bg-gradient-to-br from-blue-50 to-indigo-100 z-0 flex items-center justify-center"
+        style={{
+          backgroundImage:
+            "url('https://img.freepik.com/free-vector/abstract-secure-technology-background_23-2148357087.jpg?t=st=1743559741~exp=1743563341~hmac=30edadd9dc60921f2f83c13c7d380204223b1ce3fe2012cdd5423c1702514cd1&w=1380')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundAttachment: "fixed",
+        }}
+      >
+        <div className="absolute inset-0 bg-black bg-opacity-30 backdrop-blur-sm"></div>
+        <form
+          onSubmit={handleLogin}
+          className="relative bg-white bg-opacity-20 p-6 rounded-lg shadow-lg space-y-4 w-full max-w-sm"
+        >
+          <h2 className="text-2xl font-bold text-center text-blue-300 mb-4">
+            Login to Admin Dashboard
+          </h2>
           <div>
-            <label htmlFor="username" className="block text-gray-700 mb-2">Username</label>
+            <label htmlFor="username" className="block text-green-300 mb-2">
+              Username
+            </label>
             <input
               id="username"
               name="username"
@@ -62,9 +72,11 @@ const AdminLogin = () => {
               required
             />
           </div>
-          
+  
           <div>
-            <label htmlFor="password" className="block text-gray-700 mb-2">Password</label>
+            <label htmlFor="password" className="block text-green-300 mb-2">
+              Password
+            </label>
             <input
               id="password"
               name="password"
@@ -75,7 +87,7 @@ const AdminLogin = () => {
               required
             />
           </div>
-          
+  
           <button
             type="submit"
             className="w-full bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 disabled:bg-blue-300"
