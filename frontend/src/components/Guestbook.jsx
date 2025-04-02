@@ -54,6 +54,7 @@ const Guestbook = () => {
     }
 };
 
+
 return (
     <div className="relative min-h-screen">
       {/* Fixed background */}
@@ -129,6 +130,7 @@ return (
 
           {/* Entries List with animation */}
           <div className="space-y-4">
+
   {entries.map(entry => (
     <div key={entry.id} className="bg-white rounded-lg shadow p-6 relative">
       <div className="flex justify-between items-start mb-2">
@@ -138,10 +140,12 @@ return (
       <p className="text-gray-700">{entry.message}</p>
       <span className="text-sm text-gray-500 absolute bottom-2 right-2">{entry.name}</span>
     </div>
+
             ))}
           </div>
         </div>
       </div>
+
     </div>
   );
 };

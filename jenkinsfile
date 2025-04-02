@@ -15,7 +15,9 @@ pipeline {
        stage('SCM Checkout') {
             steps {
             retry(3) {
-            git branch: 'main', url: GITHUB_REPO }
+
+            git branch: 'development', url: GITHUB_REPO }
+
             }
         }
 

@@ -1,8 +1,10 @@
 const express = require('express');
 const cors = require('cors');
 const sequelize = require('./database'); // Import Sequelize instance
+
 const testimonialRoutes = require('./routes/testimonialRoute'); // Import testimonial routes
 const jwt = require('jsonwebtoken'); // Add JWT for token generation
+
 
 require('dotenv').config(); // Load environment variables
 
@@ -11,6 +13,7 @@ const app = express();
 // Middleware
 app.use(cors());
 app.use(express.json());
+
 
 // Hardcoded admin credentials (for simplicity; use a database in production)
 const ADMIN_USERNAME = 'admin';
@@ -30,6 +33,7 @@ app.post('/auth/login', (req, res) => {
   }
 });
 
+
 // Routes
 app.get('/', (req, res) => res.send('API is running...'));
 app.use('/testimonials', testimonialRoutes);
@@ -38,6 +42,7 @@ app.use('/testimonials', testimonialRoutes);
 const PORT = process.env.PORT || 5000;
 
 sequelize.sync()
+
   .then(() => {
     console.log('Database synced...');
     app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
@@ -45,3 +50,4 @@ sequelize.sync()
   .catch(err => {
     console.error('Error syncing database:', err);
   });
+
